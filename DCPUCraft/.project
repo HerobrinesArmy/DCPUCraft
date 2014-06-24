@@ -30,10 +30,5 @@
 			<type>2</type>
 			<location>D:/forge_src/lib</location>
 		</link>
-		<link>
-			<name>src</name>
-			<type>2</type>
-			<location>D:/forge_src/src</location>
-		</link>
 	</linkedResources>
 </projectDescription>
