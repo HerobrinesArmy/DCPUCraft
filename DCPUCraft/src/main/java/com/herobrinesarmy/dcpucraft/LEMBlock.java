@@ -53,7 +53,7 @@ public class LEMBlock {
 
 		block = (BlockLEM1802) (new BlockLEM1802().setHardness(2.0F)
 				.setResistance(10.0F).setLightLevel(0.0F).setBlockName("LEM1802")
-				.setBlockTextureName("wood_planks_stained_white")
+				.setBlockTextureName("LEM1802")
 				.setLightOpacity(0).setStepSound(Block.soundTypeStone)
 				.setCreativeTab(CreativeTabs.tabBlock));
 		block.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
