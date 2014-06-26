@@ -45,8 +45,8 @@ public class LEMBlock {
 
 		GameRegistry.addRecipe(new ItemStack(block, 1), new Object[] { 
 			"AAA",
-    		"ABA",
-    		"AAA", 'A', Blocks.dirt, 'B', Blocks.sand});
+    			"ABA",
+    			"AAA", 'A', Blocks.dirt, 'B', Blocks.sand});
 	}
 
 	static {
@@ -57,7 +57,7 @@ public class LEMBlock {
 				.setLightOpacity(0).setStepSound(Block.soundTypeStone)
 				.setCreativeTab(CreativeTabs.tabBlock));
 		block.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
-		Block.blockRegistry.addObject(176, "LEM1802", block);
+		Block.blockRegistry.addObject(600, "LEM1802", block);
 		block.setHarvestLevel("pickaxe", 0);
 	}
 
