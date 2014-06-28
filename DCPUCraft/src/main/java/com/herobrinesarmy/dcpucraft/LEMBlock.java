@@ -1,5 +1,9 @@
 package com.herobrinesarmy.dcpucraft;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Random;
 
 import net.minecraft.block.Block;
@@ -57,7 +61,7 @@ public class LEMBlock {
 				.setLightOpacity(0).setStepSound(Block.soundTypeStone)
 				.setCreativeTab(CreativeTabs.tabBlock));
 		block.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
-		Block.blockRegistry.addObject(600, "LEM1802", block);
+		Block.blockRegistry.addObject(601, "LEM1802", block);
 		block.setHarvestLevel("pickaxe", 0);
 	}
 
@@ -80,7 +84,20 @@ public class LEMBlock {
 
 		protected BlockLEM1802() {
 			super(Material.ground);
-
+			setTickRandomly(false);
+			System.out.println("asdgasdg");
+         BufferedWriter bw2 = null;
+         try {
+            bw2 = new BufferedWriter(new FileWriter(new File("D:/fdsa.txt")));
+         } catch (IOException e) {
+            e.printStackTrace();
+         }
+         try {
+            bw2.write("created BlockLEM1802\r\n");
+            bw2.close();
+         } catch (IOException e) {
+            e.printStackTrace();
+         }
 		}
 
 		public int isProvidingStrongPower(IBlockAccess par1IBlockAccess,
@@ -123,18 +140,33 @@ public class LEMBlock {
 		public int getRenderType() {
 			return 0;
 		}
-
-		public int tickRate() {
-			return 1;
+		
+		@Override
+		public int tickRate(World p_149738_1_) {
+		   return 1;
 		}
+		
+		protected BufferedWriter bw; 
 
 		@Override
-		public void updateTick(World p_149674_1_, int p_149674_2_,
-				int p_149674_3_, int p_149674_4_, Random p_149674_5_) {
-			super.updateTick(p_149674_1_, p_149674_2_, p_149674_3_, p_149674_4_,
-					p_149674_5_);
+		public void updateTick(World world, int x, int y, int z, Random random) {
 			System.out.println("tick");
+			if (bw == null)
+			{
+   			try {
+               bw = new BufferedWriter(new FileWriter(new File("D:/fdsa.txt")));
+            } catch (IOException e) {
+               e.printStackTrace();
+            }
+			}
+			try {
+            bw.write("tick\r\n");
+            bw.flush();
+         } catch (IOException e) {
+            e.printStackTrace();
+         }
 		}
+		
 		public int quantityDropped(Random par1Random) {
 			return 1;
 		}

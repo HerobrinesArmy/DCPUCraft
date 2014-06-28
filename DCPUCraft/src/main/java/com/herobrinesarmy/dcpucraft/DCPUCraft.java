@@ -32,6 +32,7 @@ public class DCPUCraft implements IFuelHandler, IWorldGenerator {
 	public static DCPUCraft instance;
 
 	LEMBlock lemBlock = new LEMBlock();
+	DCPUBlock dcpuBlock = new DCPUBlock();
 
 	@Override
 	public int getBurnTime(ItemStack fuel) {
@@ -58,21 +59,25 @@ public class DCPUCraft implements IFuelHandler, IWorldGenerator {
 
 	@EventHandler
 	public void load(FMLInitializationEvent event) {
-		GameRegistry.registerFuelHandler(this);
-		GameRegistry.registerWorldGenerator(this, 1);
+		GameRegistry.registerFuelHandler(this); //TODO: I think this needs to go.
+		GameRegistry.registerWorldGenerator(this, 1); //TODO: I think this needs to go.
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
 		lemBlock.load();
+		dcpuBlock.load();
 	}
 
 	@EventHandler
 	public void serverLoad(FMLServerStartingEvent event) {
 		lemBlock.serverLoad(event);
+		dcpuBlock.serverLoad(event);
 	}
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		LEMBlock.instance = instance;
+		DCPUBlock.instance = instance;
 		lemBlock.preInit(event);
+		dcpuBlock.preInit(event);
 		proxy.registerRenderers(this);
 	}
 

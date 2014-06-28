@@ -4,5 +4,6 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void registerRenderers(DCPUCraft ins) {
 		ins.lemBlock.registerRenderers();
+		ins.dcpuBlock.registerRenderers();
 	}
 }
