@@ -85,19 +85,6 @@ public class LEMBlock {
 		protected BlockLEM1802() {
 			super(Material.ground);
 			setTickRandomly(false);
-			System.out.println("asdgasdg");
-         BufferedWriter bw2 = null;
-         try {
-            bw2 = new BufferedWriter(new FileWriter(new File("D:/fdsa.txt")));
-         } catch (IOException e) {
-            e.printStackTrace();
-         }
-         try {
-            bw2.write("created BlockLEM1802\r\n");
-            bw2.close();
-         } catch (IOException e) {
-            e.printStackTrace();
-         }
 		}
 
 		public int isProvidingStrongPower(IBlockAccess par1IBlockAccess,
