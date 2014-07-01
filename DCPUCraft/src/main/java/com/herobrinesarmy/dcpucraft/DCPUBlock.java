@@ -2,6 +2,8 @@ package com.herobrinesarmy.dcpucraft;
 
 import java.util.Random;
 
+import org.apache.logging.log4j.Level;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -17,6 +19,7 @@ import net.minecraft.world.World;
 
 import com.herobrinesarmy.dcpucraft.emulation.DCPU;
 
+import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -227,9 +230,10 @@ public class DCPUBlock {
                lastCycle -= 1667;
             }
          }
+         FMLLog.getLogger().log(Level.DEBUG, "Ticked " + cyclesToDo + ". PC is now at " + ((int)dcpu.pc));
 //         lastCycle += cyclesToDo;
          start = time;//+= delta * 10000;
-         System.out.println("Did " + cyclesToDo + " ticks. PC is now at " + ((int)dcpu.pc));
+//         System.out.println("Did " + cyclesToDo + " ticks. PC is now at " + ((int)dcpu.pc));
 //         if (bw == null) {
 //            try {
 //               bw = new BufferedWriter(new FileWriter(new File("D:/fdsa4.txt")));

@@ -4,6 +4,13 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.util.ResourceLocation;
+
+import org.apache.logging.log4j.Level;
+
+import cpw.mods.fml.common.FMLLog;
+
 public class VirtualMonitor extends DCPUHardware {
    public static final int WIDTH_CHARS = 32;
    public static final int HEIGHT_CHARS = 12;
@@ -18,14 +25,16 @@ public class VirtualMonitor extends DCPUHardware {
    private int fontMemMap;
    private int paletteMemMap;
    private int borderColor = 0;
-   private int startDelay = 0;
+   private int startDelay = 60;
 
    private String id = "LEM1802";
+   static ResourceLocation bootTexture = new ResourceLocation("textures/boot.png");
+   static ResourceLocation fontTexture = new ResourceLocation("textures/font.png");
 
    private static final int[] loadImage = new int[12288];
    static {
       try {
-         ImageIO.read(VirtualMonitor.class.getResource("/devcpu/emulation/boot.png")).getRGB(0, 0, 128, 96, loadImage, 0, 128);
+         ImageIO.read(Minecraft.getMinecraft().getResourceManager().getResource(bootTexture).getInputStream()).getRGB(0, 0, 128, 96, loadImage, 0, 128);
       } catch (IOException e) {
          e.printStackTrace();
       }
@@ -43,7 +52,8 @@ public class VirtualMonitor extends DCPUHardware {
    private void resetFont() {
       int[] pixels = new int[4096];
       try {
-         ImageIO.read(VirtualMonitor.class.getResource("/devcpu/emulation/font.png")).getRGB(0, 0, 128, 32, pixels, 0, 128);
+         FMLLog.getLogger().log(Level.DEBUG, bootTexture.getResourceDomain() + " | " + bootTexture.getResourcePath());
+         ImageIO.read(Minecraft.getMinecraft().getResourceManager().getResource(fontTexture).getInputStream()).getRGB(0, 0, 128, 32, pixels, 0, 128);
       } catch (IOException e) {
          e.printStackTrace();
       }
