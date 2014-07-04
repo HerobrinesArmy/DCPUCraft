@@ -9,6 +9,7 @@ import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
@@ -16,9 +17,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import com.herobrinesarmy.dcpucraft.emulation.DCPU;
 import com.herobrinesarmy.dcpucraft.emulation.VirtualMonitor;
 
 import cpw.mods.fml.client.registry.ClientRegistry;
@@ -175,9 +178,17 @@ public class LEMBlock {
 
    static class LEMTileEntity extends TileEntity {
       public VirtualMonitor lem = new VirtualMonitor();
+      public DCPU dcpu = new DCPU();
 
       public LEMTileEntity() {
          lem.powerOn();
+         try {
+            dcpu.load(Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation("dcpuimages/rick.bin")).getInputStream());
+         } catch (IOException e) {
+            e.printStackTrace();
+         }
+         lem.connectTo(dcpu);
+         new Thread(dcpu).start();
       }
 
       @Override

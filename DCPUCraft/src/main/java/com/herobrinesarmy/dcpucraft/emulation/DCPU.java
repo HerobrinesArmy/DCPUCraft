@@ -1,7 +1,11 @@
 package com.herobrinesarmy.dcpucraft.emulation;
 
+import java.io.BufferedInputStream;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +14,7 @@ import java.util.List;
  * 
  * @author Notch, Herobrine
  */
-public class DCPU {
+public class DCPU implements Runnable {
    private static final boolean DISASSEMBLE = false;
    public char[] ram = new char[65536];
    public char pc;
@@ -681,16 +685,22 @@ public class DCPU {
          // e.printStackTrace();
          // }
          // }
-         long start = System.nanoTime();
-         while (cycles < 1000000000) {
+//         long start = System.nanoTime();
+         while (cycles < 1667) {
             tick();
          }
-         // tickHardware();
-         long finish = System.nanoTime();
-         System.out.println(finish - start);
-         cycles -= 1000000000;// cyclesPerFrame;
+          tickHardware();
+//         long finish = System.nanoTime();
+//         System.out.println(finish - start);
+         cycles -= 1667;// cyclesPerFrame;
          // totalCycles += 1000000;
          // nextTime += nsPerFrame;
+         try {
+            Thread.sleep(16);
+         } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+         }
       }
       // pc = 0;
       // sp = 0;
@@ -711,5 +721,23 @@ public class DCPU {
 
    public static void main(String[] args) {
       new DCPU().run();
+   }
+
+   public void load(InputStream inputStream) throws IOException
+   {
+      DataInputStream dis = new DataInputStream(new BufferedInputStream(inputStream));
+      int i = 0;
+      try {
+         for (; i < ram.length; i++) {
+            ram[i] = dis.readChar();
+         }
+      } catch (ArrayIndexOutOfBoundsException e) {
+         e.printStackTrace();
+      } catch (IOException e) {
+         for (; i < ram.length; i++) {
+            ram[i] = 0;
+         }
+         dis.close();
+      }  
    }
 }
