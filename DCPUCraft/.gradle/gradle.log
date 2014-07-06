@@ -6,7 +6,8 @@
  MCP Data version : unknown
 ****************************
 :extractUserDev UP-TO-DATE
-:makeStart
+:extractNatives UP-TO-DATE
+:makeStart SKIPPED
 :compileApiJava UP-TO-DATE
 :processApiResources UP-TO-DATE
 :apiClasses UP-TO-DATE
@@ -14,7 +15,7 @@
 :compileJavawarning: [options] bootstrap class path not set in conjunction with -source 1.6
 1 warning
 
-:processResources
+:processResources UP-TO-DATE
 :classes
 :jar
 :compileTestJava UP-TO-DATE
@@ -29,4 +30,4 @@
 
 BUILD SUCCESSFUL
 
-Total time: 22.027 secs
+Total time: 13.981 secs

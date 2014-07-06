@@ -21,7 +21,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import com.herobrinesarmy.dcpucraft.emulation.AWTKeyMapping;
 import com.herobrinesarmy.dcpucraft.emulation.DCPU;
+import com.herobrinesarmy.dcpucraft.emulation.VirtualKeyboard;
 import com.herobrinesarmy.dcpucraft.emulation.VirtualMonitor;
 
 import cpw.mods.fml.client.registry.ClientRegistry;
@@ -178,16 +180,62 @@ public class LEMBlock {
 
    static class LEMTileEntity extends TileEntity {
       public VirtualMonitor lem = new VirtualMonitor();
+      public VirtualKeyboard vk = new VirtualKeyboard(new AWTKeyMapping(true));
       public DCPU dcpu = new DCPU();
+      public static int counter;
 
       public LEMTileEntity() {
          lem.powerOn();
          try {
-            dcpu.load(Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation("dcpuimages/rick.bin")).getInputStream());
+            switch (counter++ % 20) //TODO: find out why this constructor seems to get called twice for each LEM1802.
+            {
+            case 0:
+            case 1:
+               dcpu.load(Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation("dcpuimages/rick.bin")).getInputStream());
+               break;
+            case 2:
+            case 3:
+               dcpu.load(Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation("dcpuimages/admiral.bin")).getInputStream());
+               break;
+            case 4:
+            case 5:
+               dcpu.load(Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation("dcpuimages/asteroids.bin")).getInputStream());
+               break;
+            case 6:
+            case 7:
+               dcpu.load(Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation("dcpuimages/floodit.bin")).getInputStream());
+               break;
+            case 8:
+            case 9:
+               dcpu.load(Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation("dcpuimages/imustrun.bin")).getInputStream());
+               break;
+            case 10:
+            case 11:
+               dcpu.load(Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation("dcpuimages/matrix.bin")).getInputStream());
+               break;
+            case 12:
+            case 13:
+               dcpu.load(Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation("dcpuimages/minesweeper.bin")).getInputStream());
+               break;
+            case 14:
+            case 15:
+               dcpu.load(Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation("dcpuimages/snake.bin")).getInputStream());
+               break;
+            case 16:
+            case 17:
+               dcpu.load(Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation("dcpuimages/tetris.bin")).getInputStream());
+               break;
+            case 18:
+            case 19:
+               dcpu.load(Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation("dcpuimages/rts.bin")).getInputStream());
+               break;
+            }
+            
          } catch (IOException e) {
             e.printStackTrace();
          }
          lem.connectTo(dcpu);
+         vk.connectTo(dcpu);
          new Thread(dcpu).start();
       }
 
