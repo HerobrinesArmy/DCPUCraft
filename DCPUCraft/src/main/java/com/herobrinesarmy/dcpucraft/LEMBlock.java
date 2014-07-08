@@ -21,8 +21,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-import com.herobrinesarmy.dcpucraft.emulation.AWTKeyMapping;
 import com.herobrinesarmy.dcpucraft.emulation.DCPU;
+import com.herobrinesarmy.dcpucraft.emulation.LWJGLKeyMapping;
 import com.herobrinesarmy.dcpucraft.emulation.VirtualKeyboard;
 import com.herobrinesarmy.dcpucraft.emulation.VirtualMonitor;
 
@@ -125,7 +125,7 @@ public class LEMBlock {
 
       @Override
       public TileEntity createTileEntity(World world, int metadata) {
-         return new LEMTileEntity();
+         return new LEMTileEntity(this);
       }
 
       @SideOnly(Side.CLIENT)
@@ -180,14 +180,16 @@ public class LEMBlock {
 
    static class LEMTileEntity extends TileEntity {
       public VirtualMonitor lem = new VirtualMonitor();
-      public VirtualKeyboard vk = new VirtualKeyboard(new AWTKeyMapping(true));
+      public VirtualKeyboard vk = new VirtualKeyboard(new LWJGLKeyMapping(true));
       public DCPU dcpu = new DCPU();
+      public BlockLEM1802 block;
       public static int counter;
 
-      public LEMTileEntity() {
+      public LEMTileEntity(BlockLEM1802 block) {
+         this.block = block;
          lem.powerOn();
          try {
-            switch (counter++ % 20) //TODO: find out why this constructor seems to get called twice for each LEM1802.
+            switch (counter++ % 12) //TODO: find out why this constructor seems to get called twice for each LEM1802.
             {
             case 0:
             case 1:
@@ -199,7 +201,7 @@ public class LEMBlock {
                break;
             case 4:
             case 5:
-               dcpu.load(Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation("dcpuimages/asteroids.bin")).getInputStream());
+               dcpu.load(Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation("dcpuimages/rts.bin")).getInputStream());
                break;
             case 6:
             case 7:
@@ -207,27 +209,11 @@ public class LEMBlock {
                break;
             case 8:
             case 9:
-               dcpu.load(Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation("dcpuimages/imustrun.bin")).getInputStream());
+               dcpu.load(Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation("dcpuimages/minesweeper.bin")).getInputStream());
                break;
             case 10:
             case 11:
                dcpu.load(Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation("dcpuimages/matrix.bin")).getInputStream());
-               break;
-            case 12:
-            case 13:
-               dcpu.load(Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation("dcpuimages/minesweeper.bin")).getInputStream());
-               break;
-            case 14:
-            case 15:
-               dcpu.load(Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation("dcpuimages/snake.bin")).getInputStream());
-               break;
-            case 16:
-            case 17:
-               dcpu.load(Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation("dcpuimages/tetris.bin")).getInputStream());
-               break;
-            case 18:
-            case 19:
-               dcpu.load(Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation("dcpuimages/rts.bin")).getInputStream());
                break;
             }
             

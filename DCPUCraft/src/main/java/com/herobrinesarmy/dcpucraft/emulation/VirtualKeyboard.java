@@ -1,5 +1,7 @@
 package com.herobrinesarmy.dcpucraft.emulation;
 
+import com.herobrinesarmy.dcpucraft.KeyHandler;
+
 public class VirtualKeyboard extends DCPUHardware {
    public static final int KEY_BACKSPACE = 16;
    public static final int KEY_RETURN = 17;
@@ -30,6 +32,7 @@ public class VirtualKeyboard extends DCPUHardware {
 
    public VirtualKeyboard(KeyMapping keyMapping) {
       this("Generic Keyboard", keyMapping);
+      KeyHandler.instance.registerKeyboard(this); //TODO De-register
    }
 
    public boolean isPowered() {

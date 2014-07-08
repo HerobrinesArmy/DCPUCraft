@@ -667,9 +667,9 @@ public class DCPU implements Runnable {
       // (new Thread() {
       // @Override
       // public void run() {
-      // for (DCPUHardware hw : hardware) {
-      // hw.powerOn();
-      // }
+       for (DCPUHardware hw : hardware) {
+          hw.powerOn();
+       }
       // opcounts = new int[64];
       // int hz = 1000 * khz;
       // int cyclesPerFrame = hz / 60 + 1;

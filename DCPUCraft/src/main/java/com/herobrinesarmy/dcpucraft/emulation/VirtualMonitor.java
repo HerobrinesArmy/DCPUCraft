@@ -298,4 +298,11 @@ public class VirtualMonitor extends DCPUHardware {
       resetFont();
       resetPixels();
    }
+
+   public float getLightLevel() {
+      int r = (lightColor & 0xFF0000) >> 16;
+      int g = (lightColor & 0xFF00) >> 8;
+      int b = (lightColor & 0xFF);
+      return 15f * (float) (r + g + b) / 768f;
+   }
 }
